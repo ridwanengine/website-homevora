@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+use Illuminate\Http\Request;
+
+class HomeController extends Controller
+{
+    public function index()
+    {
+        $products = Product::withSum('orderItems', 'jumlah')
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('Home', compact('products'));
+    }
+}
